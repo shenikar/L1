@@ -32,6 +32,7 @@ func main() {
 	exitByPanicRecover()
 	time.Sleep(2 * time.Second)
 
+	fmt.Println("\n=== Все примеры завершены ===")
 }
 
 // 1. Выход по условию
