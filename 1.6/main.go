@@ -24,6 +24,14 @@ func main() {
 	exitByChannel()
 	time.Sleep(2 * time.Second)
 
+	fmt.Println("\n=== Пример 5: Выход по runtime.Goexit ===")
+	exitByGoexit()
+	time.Sleep(2 * time.Second)
+
+	fmt.Println("\n=== Пример 6: Выход по panic/recover ===")
+	exitByPanicRecover()
+	time.Sleep(2 * time.Second)
+
 }
 
 // 1. Выход по условию
@@ -93,7 +101,7 @@ func exitByChannel() {
 				return
 			default:
 				fmt.Println("Горутина работает")
-				time.Sleep(300 * time.Millisecond)
+				time.Sleep(200 * time.Millisecond)
 			}
 		}
 	}()
@@ -111,6 +119,21 @@ func exitByGoexit() {
 		runtime.Goexit()
 		fmt.Println("Этот код не будет выполнен")
 
+	}()
+	time.Sleep(1 * time.Second)
+}
+
+// 6. Выход по panic/recover
+// Этот метод не рекомендуется для обычного управления завершением горутин,
+// так как panic предназначен для обработки ошибок.
+func exitByPanicRecover() {
+	go func() {
+		defer func() {
+			if r := recover(); r != nil {
+				fmt.Println("Горутина завершилась через panic")
+			}
+		}()
+		panic("Горутина вызывает панику")
 	}()
 	time.Sleep(1 * time.Second)
 }
